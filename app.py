@@ -8,9 +8,12 @@ def install_package(package):
         __import__(package)
     except ImportError:
         try:
+            st.write(f"📦 Attempting to install missing package: {package}...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+            st.write(f"✅ Successfully installed: {package}")
         except subprocess.CalledProcessError as e:
-            print(f"Failed to install package: {package}. Error: {e}")
+            st.error(f"❌ Failed to install package: {package}. Error: {e}")
+            raise RuntimeError(f"Could not install required package: {package}") from e
 
 # تثبيت المكتبات المطلوبة
 required_packages = ["streamlit", "Pillow", "ultralytics", "torch"]
