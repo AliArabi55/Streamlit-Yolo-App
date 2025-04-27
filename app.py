@@ -1,15 +1,12 @@
 import subprocess
 import sys
 
-# قائمة بالمكتبات المطلوبة
-required_packages = ['streamlit', 'ultralytics', 'Pillow', 'torch']
-
-# التأكد من تثبيت كل مكتبة
-for package in required_packages:
-    try:
-        __import__(package)
-    except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+# التأكد من تثبيت ultralytics قبل استيرادها
+try:
+    from ultralytics import YOLO
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", 'ultralytics'])
+    from ultralytics import YOLO
 
 # استيراد المكتبات بعد التأكد من تثبيتها
 import streamlit as st
@@ -19,7 +16,7 @@ import torch
 import os
 
 # تحميل الموديل المدرب
-model_path = r'C:\Users\Microsoft_Student_\Documents\Streamlit Yolo App\yolov8s.pt'  # غير المسار إذا كان موديلك باسم مختلف
+model_path = r'C:\GitHub\Streamlit-Yolo-App\yolov8s.pt'  # غير المسار إذا كان موديلك باسم مختلف
 model = YOLO(model_path)
 
 # إعداد صفحة Streamlit
