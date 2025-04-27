@@ -1,30 +1,5 @@
 import subprocess
 import sys
-import os
-
-# التحقق من وجود مكتبة وتثبيتها إذا لم تكن مثبتة
-def install_package(package):
-    try:
-        __import__(package)
-    except ImportError:
-        try:
-            st.write(f"📦 Attempting to install missing package: {package}...")
-            result = subprocess.run(
-                [sys.executable, "-m", "pip", "install", package],
-                check=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True
-            )
-            st.write(f"✅ Successfully installed: {package}")
-        except subprocess.CalledProcessError as e:
-            st.error(f"❌ Failed to install package: {package}. Error: {e.stderr}")
-            raise RuntimeError(f"Could not install required package: {package}") from e
-
-# تثبيت المكتبات المطلوبة
-required_packages = ["streamlit", "Pillow", "ultralytics", "torch"]
-for package in required_packages:
-    install_package(package)
 
 # التأكد من تثبيت ultralytics قبل استيرادها
 try:
@@ -36,10 +11,12 @@ except ImportError:
 # استيراد المكتبات بعد التأكد من تثبيتها
 import streamlit as st
 from PIL import Image
+from ultralytics import YOLO
 import torch
+import os
 
 # تحميل الموديل المدرب
-model_path = r'C:\GitHub\Streamlit-Yolo-App\yolov8s.pt'  # غير المسار إذا كان موديلك باسم مختلف
+model_path = r'C:\GitHub\Streamlit-Yolo-App\yolov8s.pt'  # Ensure the file extension and path are correct
 model = YOLO(model_path)
 
 # إعداد صفحة Streamlit
