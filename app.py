@@ -5,7 +5,7 @@ import torch
 import os
 
 # تحميل الموديل المدرب
-model_path = 'yolov8s.pt'  # حط الموديل في نفس مجلد التطبيق أو حمله من رابط
+model_path = 'yolov8s.pt'  # لازم يكون الملف مرفوع مع ملفات المشروع أو يتم تحميله
 model = YOLO(model_path)
 
 # إعداد صفحة Streamlit
