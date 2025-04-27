@@ -1,14 +1,3 @@
-import subprocess
-import sys
-
-# التأكد من تثبيت ultralytics قبل استيرادها
-try:
-    from ultralytics import YOLO
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'ultralytics'])
-    from ultralytics import YOLO
-
-# استيراد المكتبات بعد التأكد من تثبيتها
 import streamlit as st
 from PIL import Image
 from ultralytics import YOLO
@@ -16,7 +5,7 @@ import torch
 import os
 
 # تحميل الموديل المدرب
-model_path = r'C:\GitHub\Streamlit-Yolo-App\yolov8s.pt'  # Ensure the file extension and path are correct
+model_path = 'yolov8s.pt'  # حط الموديل في نفس مجلد التطبيق أو حمله من رابط
 model = YOLO(model_path)
 
 # إعداد صفحة Streamlit
