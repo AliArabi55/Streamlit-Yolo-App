@@ -1,3 +1,17 @@
+import subprocess
+import sys
+
+# قائمة بالمكتبات المطلوبة
+required_packages = ['streamlit', 'ultralytics', 'Pillow', 'torch']
+
+# التأكد من تثبيت كل مكتبة
+for package in required_packages:
+    try:
+        __import__(package)
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# استيراد المكتبات بعد التأكد من تثبيتها
 import streamlit as st
 from PIL import Image
 from ultralytics import YOLO
@@ -5,7 +19,7 @@ import torch
 import os
 
 # تحميل الموديل المدرب
-model_path = r'C:\Users\Microsoft_Student_\Documents\Streamlit Yolo App\yolov8s.pt'  # تأكد أن المسار صحيح
+model_path = r'C:\Users\Microsoft_Student_\Documents\Streamlit Yolo App\yolov8s.pt'  # غير المسار إذا كان موديلك باسم مختلف
 model = YOLO(model_path)
 
 # إعداد صفحة Streamlit
@@ -17,10 +31,6 @@ if uploaded_file is not None:
     # عرض الصورة
     image = Image.open(uploaded_file)
     st.image(image, caption='📷 الصورة التي تم رفعها', use_column_width=True)
-
-    # تحويل الصورة إلى RGB قبل الحفظ
-    if image.mode != 'RGB':
-        image = image.convert('RGB')
 
     # حفظ الصورة مؤقتاً
     temp_path = "temp_uploaded_image.jpg"
@@ -44,4 +54,3 @@ if uploaded_file is not None:
 
     # حذف الصورة المؤقتة
     os.remove(temp_path)
-#22
