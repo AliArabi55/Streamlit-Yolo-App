@@ -2,15 +2,17 @@ import subprocess
 import sys
 import os
 
-# التحقق من وجود ملف requirements.txt وتثبيت المكتبات المطلوبة
-def install_requirements():
-    if not os.path.isfile('requirements.txt'):
-        print("لم يتم العثور على ملف requirements.txt!")
-        return
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", 'requirements.txt'])
+# التحقق من وجود مكتبة وتثبيتها إذا لم تكن مثبتة
+def install_package(package):
+    try:
+        __import__(package)
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
-# تثبيت المتطلبات إذا كانت غير مثبتة
-install_requirements()
+# تثبيت المكتبات المطلوبة
+required_packages = ["streamlit", "Pillow", "ultralytics", "torch"]
+for package in required_packages:
+    install_package(package)
 
 # التأكد من تثبيت ultralytics قبل استيرادها
 try:
